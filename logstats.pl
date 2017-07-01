@@ -20,7 +20,7 @@ my $state = {
     input => {},
     config => {
         config_files => ['standard.config'],
-        data_files => ['e'],
+        data_files => ['X'],
     },
 };
 
@@ -63,7 +63,7 @@ sub check_line {
             my $regex_compiled = $matcher->{regex_compiled};
             my $text = $state->{scratch}{text};
             my $match_full_line = ($matcher->{match} && $matcher->{match} eq 'line' ? 1 : 0);
-            my @values = (($match_full_line ? $line : $text) =~ /$regex_compiled/);
+            my @values = (($match_full_line ? $line : $text) =~ /$regex_compiled/g);
             if (scalar @values) {
                 $state->{scratch}{values} = \@values;
                 $matched = 1
