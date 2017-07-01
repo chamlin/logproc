@@ -20,7 +20,7 @@ my $state = {
     input => {},
     config => {
         config_files => ['standard.config'],
-        data_files => ['short'],
+        data_files => ['e'],
     },
 };
 
@@ -30,6 +30,7 @@ read_configs ($state);
 foreach my $file (@{$state->{config}{data_files}}) {
     print "< $file\n";
     $state->{input} = {
+        node => $file,
         filename => $file,
         line_number => 0,
     };
@@ -37,11 +38,12 @@ foreach my $file (@{$state->{config}{data_files}}) {
     while (my $line = <$fh>) {
         $state->{input}{line} = $line;
         $state->{input}{line_number}++;
+        check_line ($state);
     }
     close $fh;
+    print "lines read for $file: $state->{input}{line_number}.\n";
 }
 
-check_line ($state);
 
 print "obai\n";
 
@@ -53,15 +55,21 @@ sub check_line {
     my ($state) = @_;
     my $line = $state->{input}{line};
     foreach my $matcher (@{$state->{matchers}}) {
+        my $matched = 0;
         my $regex = $matcher->{regex};
-        my $text = $state->{scratch}{text};
-        print "trying", Dumper ($matcher), ".\n";
-        my $match_full_line = ($matcher->{match} && $matcher->{match} eq 'line' ? 1 : 0);
-print "mfl: $match_full_line.\n";
-        my @values = (($match_full_line ? $line : $text) =~ /$regex/);
-        print "values = ", join ('|', @values), ".\n";
-        if (scalar @values) {
-            $state->{scratch}{values} = \@values;
+        if ($regex eq '*') {
+            $matched = 1
+        } else {
+            my $regex_compiled = $matcher->{regex_compiled};
+            my $text = $state->{scratch}{text};
+            my $match_full_line = ($matcher->{match} && $matcher->{match} eq 'line' ? 1 : 0);
+            my @values = (($match_full_line ? $line : $text) =~ /$regex_compiled/);
+            if (scalar @values) {
+                $state->{scratch}{values} = \@values;
+                $matched = 1
+            }
+        }
+        if ($matched) {
             foreach my $action (@{$matcher->{actions}}) { $action->($state) }
         }
     }
@@ -92,6 +100,11 @@ sub read_configs {
             print STDERR $error;
         } else {
             push @{$state->{matchers}}, @$dstruct;
+        }
+    }
+    foreach my $matcher (@{$state->{matchers}}) {
+        if ($matcher->{regex} && $matcher->{regex} ne '*') {
+            $matcher->{regex_compiled} = qr/$matcher->{regex}/;
         }
     }
 }
