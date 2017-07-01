@@ -1,0 +1,16 @@
+fast, fast
+unordered read
+config files
+- map filenames to node
+- extract and count/sum/avg (per minute?) or keep as exact.
+debug per config file
+
+output (timestamp, host, resource, action, value)
+
+validate configs
+
+init multiple value handling
+
+actual output
+
+input options handling
