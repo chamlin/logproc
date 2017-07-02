@@ -14,3 +14,7 @@ init multiple value handling
 actual output
 
 input options handling
+
+min/max dateTime
+
+granularity (s, min, h)?

@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 use Data::Dumper;
-use Carp;
+use List::Util;
 
 # $state->{config}
 #       ->{config}{config_files}
@@ -11,8 +11,10 @@ use Carp;
 #                {line}
 #       ->{scratch}   for scratch during line match
 #       ->{scratch}{timestamp}
+#       ->{scratch}{forests}
 #       ->{scratch}{text}
 #       ->{scratch}{values}    []
+#       ->{stats}{$node}{$resource}{$action}{$value}     blank for value if none (e.g., restart)?
 
 print "ohai\n";
 
@@ -20,7 +22,7 @@ my $state = {
     input => {},
     config => {
         config_files => ['standard.config'],
-        data_files => ['X'],
+        data_files => ['short'],
     },
 };
 
@@ -38,6 +40,7 @@ foreach my $file (@{$state->{config}{data_files}}) {
     while (my $line = <$fh>) {
         $state->{input}{line} = $line;
         $state->{input}{line_number}++;
+        $state->{scratch} = {};
         check_line ($state);
     }
     close $fh;
@@ -57,6 +60,7 @@ sub check_line {
     foreach my $matcher (@{$state->{matchers}}) {
         my $matched = 0;
         my $regex = $matcher->{regex};
+        $state->{current_matcher} = $matcher;
         if ($regex eq '*') {
             $matched = 1
         } else {
@@ -71,6 +75,7 @@ sub check_line {
         }
         if ($matched) {
             foreach my $action (@{$matcher->{actions}}) { $action->($state) }
+            if ($matcher->{break}) { print STDERR "break on ", Dumper $matcher; }
         }
     }
 }
