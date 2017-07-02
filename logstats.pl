@@ -73,10 +73,10 @@ sub check_line {
                 $matched = 1
             }
         }
-        if ($matched) {
-            foreach my $action (@{$matcher->{actions}}) { $action->($state) }
-            if ($matcher->{break}) { print STDERR "break on ", Dumper $matcher; }
-        }
+        my $actions = $matched ? 'matched' : 'unmatched';
+        foreach my $action (@{$matcher->{$actions}}) { $action->($state) }
+        
+        if ($state->{scratch}{break}) { last }
     }
 }
 
