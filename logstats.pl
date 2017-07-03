@@ -50,6 +50,8 @@ foreach my $file (@{$state->{config}{data_files}}) {
 
 print "obai\n";
 
+dump_stats ($state);
+
 print Dumper $state;
 
 ############ subs
@@ -58,6 +60,7 @@ sub check_line {
     my ($state) = @_;
     my $line = $state->{input}{line};
     foreach my $matcher (@{$state->{matchers}}) {
+        if ($matcher->{disabled}) { next }
         my $matched = 0;
         my $regex = $matcher->{regex};
         $state->{current_matcher} = $matcher;
@@ -107,9 +110,35 @@ sub read_configs {
             push @{$state->{matchers}}, @$dstruct;
         }
     }
+
+    # initialize
     foreach my $matcher (@{$state->{matchers}}) {
+        $state->{current_matcher} = $matcher;
         if ($matcher->{regex} && $matcher->{regex} ne '*') {
             $matcher->{regex_compiled} = qr/$matcher->{regex}/;
         }
+        foreach my $init_action (@{$matcher->{init}}) {
+            $init_action->($state);
+        }
     }
+}
+
+sub dump_stats {
+    my ($state) = @_;
+    open my $fh, '>', 'logstats.csv';
+    foreach my $timestamp (sort keys %{$state->{stats}}) {
+        foreach my $node (sort keys %{$state->{stats}{$timestamp}}) {
+            foreach my $resource (sort keys %{$state->{stats}{$timestamp}{$node}}) {
+                foreach my $action (sort keys %{$state->{stats}{$timestamp}{$node}{$resource}}) {
+                    my $value = $state->{stats}{$timestamp}{$node}{$resource}{$action};
+                    if (ref $value eq 'ARRAY') {
+                        # aggregate
+                        $value = List::Util::sum (@$value);
+                    }
+                    print $fh join (',', ($timestamp, $node, $resource, $action, $value)), "\n";
+                }
+            }
+        }
+    }
+    close $fh;
 }
