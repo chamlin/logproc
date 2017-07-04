@@ -1,0 +1,12 @@
+2017-01-25 09:14:31.890 Info: Saved 257 MB in 2 sec at 109 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f4
+2017-01-25 09:14:31.790 Info: Saved 257 MB in 2 sec at 111 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f4
+2017-01-25 09:34:41.790 Info: Saved 257 MB in 2 sec at 109 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f4
+2017-01-25 09:24:39.960 Info: Merged 300 MB in 3 sec at 100 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f6
+2017-01-25 09:24:39.960 Info: Merged 200 MB in 1 sec at 200 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f6
+2017-01-25 09:34:39.960 Info: Merged 200 MB in 1 sec at 200 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f6
+2017-01-25 12:35:17.707 Notice: content-xdbc: XDMP-EXTIME: Time limit exceeded
+2017-01-25 12:36:17.695 Warning: XDMP-FORESTERR: Error in reindex of forest content-2: SVC-EXTIME: Time limit exceeded
+2017-02-25 12:40:52.303 Debug: IndexerEnv::putRangeIndex: XDMP-RANGEINDEX: Range index error: date fn:doc("70BB1A31-C013-4C74-BB1A-31C0135C7400")/*:Obj/*:StatusDate: XDMP-LEXVAL: Invalid lexical value ""
+2017-02-25 12:42:33.529 Notice: Starting MarkLogic Server 8.0-5.7 x86_64 in /opt/MarkLogic with data in /var/opt/MarkLogic
+2016-10-06 01:02:43.079 Warning: Forest FFE-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301630271550) by 1596 ms
+2016-10-06 01:02:44.076 Warning: Forest FFE-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301639778660) by 2546 ms
