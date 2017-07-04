@@ -22,7 +22,7 @@ my $state = {
     input => {},
     config => {
         config_files => ['standard.config'],
-        data_files => ['short'],
+        data_files => ['test'],
     },
 };
 
@@ -133,7 +133,16 @@ sub dump_stats {
                     my $value = $state->{stats}{$timestamp}{$node}{$resource}{$action};
                     if (ref $value eq 'ARRAY') {
                         # aggregate
-                        $value = List::Util::sum (@$value);
+                        my $op = ($state->{value_aggregates}{$action}{op}, $state->{value_aggregates}{default}{op})[0]; 
+                        if ($op eq 'sum') {
+                            $value = List::Util::sum (@$value);
+                        } elsif ($op eq 'avg') {
+                            $value = (List::Util::sum (@$value) / (scalar @$value));
+                        } elsif ($op eq 'max') {
+                            $value = List::Util::max (@$value);
+                        } elsif ($op eq 'min') {
+                            $value = List::Util::min (@$value);
+                        }
                     }
                     print $fh join (',', ($timestamp, $node, $resource, $action, $value)), "\n";
                 }

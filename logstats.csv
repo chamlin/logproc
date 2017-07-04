@@ -1,5 +1,7 @@
 2016-10-06 01:02:00,test,error_log,Warning,2
 2016-10-06 01:02:00,test,error_log,log_lines,2
+2016-10-06 01:02:00,test,forest,ts_lag,2
+2016-10-06 01:02:00,test,forest,ts_lag_ms,2071
 2017-01-25 09:14:00,test,Forest-content-2-r1,saved,2
 2017-01-25 09:14:00,test,Forest-content-2-r1,saved_mb,514
 2017-01-25 09:14:00,test,Forest-content-2-r1,saved_rate,110
