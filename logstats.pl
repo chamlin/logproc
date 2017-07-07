@@ -2,10 +2,37 @@
 use strict;
 use Data::Dumper;
 use List::Util;
+use Getopt::Long;
+
+use open qw< :encoding(UTF-8) >;
+
+my $state = {
+    input => {},
+    config => {
+        config_files => ['standard.config'],
+        input_files => ['test'],
+        outdir => '.',
+        debug_string => '',
+    },
+};
+
+GetOptions (
+    'file=s' => \$state->{config}{file},
+    'glob=s' => \$state->{config}{glob},
+    'outdir=s' => \$state->{config}{outdir},
+    'debug' => \$state->{config}{debug},
+    'namefrom=s' => \$state->{config}{namefrom},
+    'nameto=s' => \$state->{config}{nameto},
+);
+
+resolve_options ($state);
+
+
 
 # $state->{config}
 #       ->{config}{config_files}
 #       ->{config}{options}
+#       ->{config}{filenames}
 #       ->{input}{filename}
 #                {line_number}
 #                {line}
@@ -18,18 +45,10 @@ use List::Util;
 
 print "ohai\n";
 
-my $state = {
-    input => {},
-    config => {
-        config_files => ['standard.config'],
-        data_files => ['test'],
-    },
-};
-
 
 read_configs ($state);
 
-foreach my $file (@{$state->{config}{data_files}}) {
+foreach my $file (@{$state->{config}{input_files}}) {
     print "< $file\n";
     $state->{input} = {
         node => $file,
@@ -144,10 +163,23 @@ sub dump_stats {
                             $value = List::Util::min (@$value);
                         }
                     }
-                    print $fh join (',', ($timestamp, $node, $resource, $action, $value)), "\n";
+                    print $fh join (',', ($timestamp, $node, ($resource eq '_' ? '' : $resource), $action, $value)), "\n";
                 }
             }
         }
     }
     close $fh;
+}
+
+sub resolve_options {
+    my ($self) = @_;
+    # check files in
+    if   ($self->{config}{glob}) {
+        foreach my $glob (split (/\s*,\s*/, $self->{config}{glob})) {
+            push @{$self->{config}{input_files}}, grep { -f } glob ($glob);
+        }
+    }
+    elsif ($self->{file}) { $self->{config}{input_files} = [grep { -f } (split (',', $self->{config}{file}))] }
+    else { }
+    unless (scalar @{$self->{config}{input_files}}) { die "No filenames provided/found.\n"; }
 }

@@ -39,3 +39,6 @@
 2017-02-25 12:40:00,test,error_log,log_lines,1
 2017-02-25 12:42:00,test,error_log,Notice,1
 2017-02-25 12:42:00,test,error_log,log_lines,1
+2017-06-05 09:30:00,test,,canary,3000
+2017-06-05 09:30:00,test,error_log,Warning,2
+2017-06-05 09:30:00,test,error_log,log_lines,2

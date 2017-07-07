@@ -12,3 +12,5 @@
 2016-10-06 01:02:44.076 Warning: Forest FFE-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301639778660) by 2546 ms
 2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from open to start closing because shutting down
 2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from start closing to middle closing becaus
+2017-06-05 09:30:19.370 Warning: Canary thread sleep was 1000 ms
+2017-06-05 09:30:19.670 Warning: Canary thread sleep was 2000 ms
