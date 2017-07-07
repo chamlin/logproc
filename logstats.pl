@@ -3,14 +3,15 @@ use strict;
 use Data::Dumper;
 use List::Util;
 use Getopt::Long;
+use FindBin;                 # locate this script
 
 use open qw< :encoding(UTF-8) >;
 
 my $state = {
     input => {},
     config => {
-        config_files => ['standard.config'],
-        input_files => ['test'],
+        config_files => [$FindBin::Bin.'/standard.config'],
+        input_files => [],
         outdir => '.',
         debug_string => '',
     },
@@ -179,7 +180,7 @@ sub resolve_options {
             push @{$self->{config}{input_files}}, grep { -f } glob ($glob);
         }
     }
-    elsif ($self->{file}) { $self->{config}{input_files} = [grep { -f } (split (',', $self->{config}{file}))] }
+    elsif ($self->{config}{file}) { $self->{config}{input_files} = [grep { -f } (split (',', $self->{config}{file}))] }
     else { }
     unless (scalar @{$self->{config}{input_files}}) { die "No filenames provided/found.\n"; }
 }
