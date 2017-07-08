@@ -146,6 +146,7 @@ sub read_configs {
 sub dump_stats {
     my ($state) = @_;
     open my $fh, '>', 'logstats.csv';
+    print $fh "timestamp,node,resource,action,value\n";
     foreach my $timestamp (sort keys %{$state->{stats}}) {
         foreach my $node (sort keys %{$state->{stats}{$timestamp}}) {
             foreach my $resource (sort keys %{$state->{stats}{$timestamp}{$node}}) {
