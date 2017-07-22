@@ -72,7 +72,7 @@ print "obai\n";
 
 dump_stats ($state);
 
-print Dumper $state;
+# print Dumper $state;
 
 ############ subs
 
@@ -88,7 +88,7 @@ sub check_line {
             $matched = 1
         } else {
             my $regex_compiled = $matcher->{regex_compiled};
-            my $text = $state->{scratch}{text};
+            my $text = exists $state->{scratch}{text} ? $state->{scratch}{text} : '';
             my $match_full_line = ($matcher->{match} && $matcher->{match} eq 'line' ? 1 : 0);
             my @values = (($match_full_line ? $line : $text) =~ /$regex_compiled/g);
             if (scalar @values) {
