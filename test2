@@ -14,3 +14,7 @@
 2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from start closing to middle closing becaus
 2017-06-05 09:30:19.370 Warning: Canary thread sleep was 1000 ms
 2017-06-05 09:30:19.670 Warning: Canary thread sleep was 2000 ms
+2017-02-25 08:48:05.371 Info: Deleted 19 MB in 1 sec at 2358 MB/sec /ForestData/Primary/Forests/docsf1/000026d1
+2017-02-25 08:48:05.771 Info: Deleted 19 MB in 1 sec at 2358 MB/sec /ForestData/Primary/Forests/docsf1/000026d1
+2017-02-25 08:48:06.371 Info: Deleted 38 MB in 1 sec at 1179 MB/sec /ForestData/Primary/Forests/docsf2/000026d3
+

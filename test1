@@ -14,3 +14,4 @@
 2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from start closing to middle closing becaus
 2017-06-05 09:30:19.370 Warning: Canary thread sleep was 1000 ms
 2017-06-05 09:30:19.670 Warning: Canary thread sleep was 2000 ms
+2017-06-13 15:07:24.962 Notice: Starting MarkLogic Server 8.0-6.3 x86_64 in /opt/MarkLogic with data in /data/MarkLogic

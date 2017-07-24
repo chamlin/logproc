@@ -97,6 +97,7 @@ sub check_line {
             }
         }
         my $actions = $matched ? 'matched' : 'unmatched';
+#print "$regex: $line.\n";
         foreach my $action (@{$matcher->{$actions}}) { $action->($state) }
         
         if ($state->{scratch}{break}) { last }
@@ -147,6 +148,7 @@ sub dump_stats {
     my ($state) = @_;
     open my $fh, '>', 'logstats.csv';
     print $fh "timestamp,node,resource,action,value\n";
+    my $default_op = $state->{value_aggregates}{default}{op}; 
     foreach my $timestamp (sort keys %{$state->{stats}}) {
         foreach my $node (sort keys %{$state->{stats}{$timestamp}}) {
             foreach my $resource (sort keys %{$state->{stats}{$timestamp}{$node}}) {
@@ -154,7 +156,8 @@ sub dump_stats {
                     my $value = $state->{stats}{$timestamp}{$node}{$resource}{$action};
                     if (ref $value eq 'ARRAY') {
                         # aggregate
-                        my $op = ($state->{value_aggregates}{$action}{op}, $state->{value_aggregates}{default}{op})[0]; 
+                        my $op = $state->{value_aggregates}{$action}{op}; 
+                        unless (defined $op) { $op = $default_op }
                         if ($op eq 'sum') {
                             $value = List::Util::sum (@$value);
                         } elsif ($op eq 'avg') {
