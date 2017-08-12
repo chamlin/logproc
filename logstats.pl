@@ -97,7 +97,6 @@ sub check_line {
             }
         }
         my $actions = $matched ? 'matched' : 'unmatched';
-#print "$regex: $line.\n";
         foreach my $action (@{$matcher->{$actions}}) { $action->($state) }
         
         if ($state->{scratch}{break}) { last }
@@ -147,28 +146,25 @@ sub read_configs {
 sub dump_stats {
     my ($state) = @_;
     open my $fh, '>', 'logstats.csv';
-    print $fh "timestamp,node,resource,action,value\n";
+    my $headers = $state->{headers};
+    print $fh "$headers\n" if ($headers);
     my $default_op = $state->{value_aggregates}{default}{op}; 
     foreach my $timestamp (sort keys %{$state->{stats}}) {
         foreach my $node (sort keys %{$state->{stats}{$timestamp}}) {
-            foreach my $resource (sort keys %{$state->{stats}{$timestamp}{$node}}) {
-                foreach my $action (sort keys %{$state->{stats}{$timestamp}{$node}{$resource}}) {
-                    my $value = $state->{stats}{$timestamp}{$node}{$resource}{$action};
-                    if (ref $value eq 'ARRAY') {
-                        # aggregate
-                        my $op = $state->{value_aggregates}{$action}{op}; 
-                        unless (defined $op) { $op = $default_op }
-                        if ($op eq 'sum') {
-                            $value = List::Util::sum (@$value);
-                        } elsif ($op eq 'avg') {
-                            $value = (List::Util::sum (@$value) / (scalar @$value));
-                        } elsif ($op eq 'max') {
-                            $value = List::Util::max (@$value);
-                        } elsif ($op eq 'min') {
-                            $value = List::Util::min (@$value);
+            foreach my $resource_type (sort keys %{$state->{stats}{$timestamp}{$node}}) {
+                foreach my $resource (sort keys %{$state->{stats}{$timestamp}{$node}{$resource_type}}) {
+                    foreach my $action (sort keys %{$state->{stats}{$timestamp}{$node}{$resource_type}{$resource}}) {
+                        my $value = $state->{stats}{$timestamp}{$node}{$resource_type}{$resource}{$action};
+                        my $values;
+                        if (ref $value eq 'ARRAY') {
+                            $values = $value
+                        } else {
+                            $values = [ $value ]
+                        }
+                        foreach my $v (@$values) {
+                            print $fh join (',', ($timestamp, $node, $resource_type, ($resource eq '_' ? '' : $resource), $action, $v)), "\n";
                         }
                     }
-                    print $fh join (',', ($timestamp, $node, ($resource eq '_' ? '' : $resource), $action, $value)), "\n";
                 }
             }
         }
