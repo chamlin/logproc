@@ -1,9 +1,6 @@
 2017-01-25 09:14:31.890 Info: Saved 257 MB in 2 sec at 109 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f4
-2017-01-25 09:14:31.790 Info: Saved 257 MB in 2 sec at 111 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f4
-2017-01-25 09:34:41.790 Info: Saved 257 MB in 2 sec at 109 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f4
-2017-01-25 09:24:39.960 Info: Merged 300 MB in 3 sec at 100 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f6
-2017-01-25 09:24:39.960 Info: Merged 200 MB in 1 sec at 200 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f6
 2017-01-25 09:34:39.960 Info: Merged 200 MB in 1 sec at 200 MB/sec to /data01/data/ML/Forests/content-2-r1/000004f6
+2015-04-12 00:01:45.343 Info: Deleted 324 MB in 1 sec at 10930 MB/sec /ForestData/Primary/Forests/com-3/000003e4
 2017-01-25 12:35:17.707 Notice: content-xdbc: XDMP-EXTIME: Time limit exceeded
 2017-01-25 12:36:17.695 Warning: XDMP-FORESTERR: Error in reindex of forest content-2: SVC-EXTIME: Time limit exceeded
 2017-02-25 12:40:52.303 Debug: IndexerEnv::putRangeIndex: XDMP-RANGEINDEX: Range index error: date fn:doc("70BB1A31-C013-4C74-BB1A-31C0135C7400")/*:Obj/*:StatusDate: XDMP-LEXVAL: Invalid lexical value ""
@@ -11,10 +8,18 @@
 2016-10-06 01:02:43.079 Warning: Forest FFE-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301630271550) by 1596 ms
 2016-10-06 01:02:44.076 Warning: Forest FFE-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301639778660) by 2546 ms
 2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from open to start closing because shutting down
-2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from start closing to middle closing becaus
+2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from start closing to middle closing because who knows why
+2017-06-13 15:07:24.962 Notice: Starting MarkLogic Server 8.0-6.3 x86_64 in /opt/MarkLogic with data in /data/MarkLogic
+2017-07-11 23:11:10.471 Info: Forest documents-012b state changed from unmounted to mounted
+2017-07-11 23:11:10.528 Info: Forest Schemas state changed from recovering to wait replication because not yet sure who is master
+2017-07-11 23:11:10.422 Info: Forest Extensions state changed from recovering to open
+2017-07-11 23:11:10.435 Info: Forest Security state changed from recovering to wait replication because not yet sure who is master
+2017-07-11 23:11:10.436 Info: Forest documents-007b state changed from unmounted to mounted
+2017-06-13 13:48:46.132 Notice: Starting MarkLogic Server 8.0-6.3 x86_64 in /opt/MarkLogic with data in /xmlstore/MarkLogic
+Segmentation fault in thread 0x00007f45b3776780 addr 0x310
+Thread 19 (Thread 0x7f45b3774700 (LWP 44176)):
+#0  0x00007f45af83279b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00007f45af83282f in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00007f45af8328cb in sem_wait@@GLIBC_2.2.5 () from /lib64/libpthread.so.0
 2017-06-05 09:30:19.370 Warning: Canary thread sleep was 1000 ms
 2017-06-05 09:30:19.670 Warning: Canary thread sleep was 2000 ms
-2017-02-25 08:48:05.371 Info: Deleted 19 MB in 1 sec at 2358 MB/sec /ForestData/Primary/Forests/docsf1/000026d1
-2017-02-25 08:48:05.771 Info: Deleted 19 MB in 1 sec at 2358 MB/sec /ForestData/Primary/Forests/docsf1/000026d1
-2017-02-25 08:48:06.371 Info: Deleted 38 MB in 1 sec at 1179 MB/sec /ForestData/Primary/Forests/docsf2/000026d3
-

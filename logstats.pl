@@ -49,6 +49,12 @@ print "ohai\n";
 
 read_configs ($state);
 
+
+open my $fh_out, '>', 'logstats.csv';
+$state->{fh_out} = $fh_out;
+my $headers = $state->{headers};
+print $fh_out "$headers\n" if ($headers);
+
 foreach my $file (@{$state->{config}{input_files}}) {
     print "< $file\n";
     $state->{input} = {
@@ -67,12 +73,14 @@ foreach my $file (@{$state->{config}{input_files}}) {
     print "lines read for $file: $state->{input}{line_number}.\n";
 }
 
-
 print "obai\n";
 
-dump_stats ($state);
+#dump_stats ($state);
+dump_counts ($fh_out, $state->{counts}, '');
 
-# print Dumper $state;
+close $fh_out;
+
+#print STDERR Dumper $state;
 
 ############ subs
 
@@ -101,6 +109,15 @@ sub check_line {
         
         if ($state->{scratch}{break}) { last }
     }
+
+    if (exists $state->{ship}) {
+        my $output = $state->{fh_out};
+        foreach $line (@{$state->{ship}}) {
+            print $output join (',', @$line), "\n";
+        }
+    }
+
+    $state->{ship} = [];
 }
 
 
@@ -143,33 +160,15 @@ sub read_configs {
     }
 }
 
-sub dump_stats {
-    my ($state) = @_;
-    open my $fh, '>', 'logstats.csv';
-    my $headers = $state->{headers};
-    print $fh "$headers\n" if ($headers);
-    my $default_op = $state->{value_aggregates}{default}{op}; 
-    foreach my $timestamp (sort keys %{$state->{stats}}) {
-        foreach my $node (sort keys %{$state->{stats}{$timestamp}}) {
-            foreach my $resource_type (sort keys %{$state->{stats}{$timestamp}{$node}}) {
-                foreach my $resource (sort keys %{$state->{stats}{$timestamp}{$node}{$resource_type}}) {
-                    foreach my $action (sort keys %{$state->{stats}{$timestamp}{$node}{$resource_type}{$resource}}) {
-                        my $value = $state->{stats}{$timestamp}{$node}{$resource_type}{$resource}{$action};
-                        my $values;
-                        if (ref $value eq 'ARRAY') {
-                            $values = $value
-                        } else {
-                            $values = [ $value ]
-                        }
-                        foreach my $v (@$values) {
-                            print $fh join (',', ($timestamp, $node, $resource_type, ($resource eq '_' ? '' : $resource), $action, $v)), "\n";
-                        }
-                    }
-                }
-            }
+sub dump_counts {
+    my ($fh_out, $ref, $prefix) = @_;
+    if (ref $ref eq 'HASH') {
+        foreach my $key (sort keys %$ref) {
+            dump_counts ($fh_out, $ref->{$key}, "$prefix$key,");
         }
+    } else {
+        print $fh_out "$prefix$ref\n";
     }
-    close $fh;
 }
 
 sub resolve_options {
