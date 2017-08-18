@@ -23,3 +23,6 @@ Thread 19 (Thread 0x7f45b3774700 (LWP 44176)):
 #2  0x00007f45af8328cb in sem_wait@@GLIBC_2.2.5 () from /lib64/libpthread.so.0
 2017-06-05 09:30:19.370 Warning: Canary thread sleep was 1000 ms
 2017-06-05 09:30:19.670 Warning: Canary thread sleep was 2000 ms
+2017-04-10 04:45:54.892 Debug: Hung 10 sec
+2017-04-10 04:46:26.523 Debug: Hung 15 sec
+2017-04-10 05:04:09.292 Warning: Hung 22 sec

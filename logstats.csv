@@ -23,6 +23,9 @@ timestamp,node,reading,resource,action,value
 2017-06-13 13:48:46,test1,event,process,segfault,1
 2017-06-05 09:30:19,test1,duration,process,canary,1000
 2017-06-05 09:30:19,test1,duration,process,canary,2000
+2017-04-10 04:45:54,test1,duration,process,hung,10
+2017-04-10 04:46:26,test1,duration,process,hung,15
+2017-04-10 05:04:09,test1,duration,process,hung,22
 2017-01-25 09:14:31,test2,rate,content-2-r1,saved,109
 2017-01-25 09:14:31,test2,size,content-2-r1,saved,257
 2017-01-25 09:14:31,test2,duration,content-2-r1,saved,2
@@ -47,6 +50,9 @@ timestamp,node,reading,resource,action,value
 2017-06-13 13:48:46,test2,event,process,segfault,1
 2017-06-05 09:30:19,test2,duration,process,canary,1000
 2017-06-05 09:30:19,test2,duration,process,canary,2000
+2017-04-10 04:45:54,test2,duration,process,hung,10
+2017-04-10 04:46:26,test2,duration,process,hung,15
+2017-04-10 05:04:09,test2,duration,process,hung,22
 2015-04-12 00:01:00,test1,count,log_level,Info,1
 2015-04-12 00:01:00,test2,count,log_level,Info,1
 2016-10-06 01:02:00,test1,count,log_level,Warning,2
@@ -79,6 +85,12 @@ timestamp,node,reading,resource,action,value
 2017-02-25 12:40:00,test2,count,log_level,Debug,1
 2017-02-25 12:42:00,test1,count,log_level,Notice,1
 2017-02-25 12:42:00,test2,count,log_level,Notice,1
+2017-04-10 04:45:00,test1,count,log_level,Debug,1
+2017-04-10 04:45:00,test2,count,log_level,Debug,1
+2017-04-10 04:46:00,test1,count,log_level,Debug,1
+2017-04-10 04:46:00,test2,count,log_level,Debug,1
+2017-04-10 05:04:00,test1,count,log_level,Warning,1
+2017-04-10 05:04:00,test2,count,log_level,Warning,1
 2017-06-05 09:30:00,test1,count,log_level,Warning,2
 2017-06-05 09:30:00,test2,count,log_level,Warning,2
 2017-06-13 13:48:00,test1,count,log_level,Notice,1
