@@ -91,6 +91,7 @@ sub check_line {
         if ($matcher->{disabled}) { next }
         my $matched = 0;
         my $regex = $matcher->{regex};
+        unless (defined $regex) { next }
         $state->{current_matcher} = $matcher;
         if ($regex eq '*') {
             $matched = 1
@@ -150,6 +151,7 @@ sub read_configs {
 
     # initialize
     foreach my $matcher (@{$state->{matchers}}) {
+        if ($matcher->{disabled}) { next }
         $state->{current_matcher} = $matcher;
         if ($matcher->{regex} && $matcher->{regex} ne '*') {
             $matcher->{regex_compiled} = qr/$matcher->{regex}/;
