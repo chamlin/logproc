@@ -5,10 +5,10 @@
 2017-01-25 12:36:17.695 Warning: XDMP-FORESTERR: Error in reindex of forest content-2: SVC-EXTIME: Time limit exceeded
 2017-02-25 12:40:52.303 Debug: IndexerEnv::putRangeIndex: XDMP-RANGEINDEX: Range index error: date fn:doc("70BB1A31-C013-4C74-BB1A-31C0135C7400")/*:Obj/*:StatusDate: XDMP-LEXVAL: Invalid lexical value ""
 2017-02-25 12:42:33.529 Notice: Starting MarkLogic Server 8.0-5.7 x86_64 in /opt/MarkLogic with data in /var/opt/MarkLogic
-2016-10-06 01:02:43.079 Warning: Forest FFE-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301630271550) by 1596 ms
-2016-10-06 01:02:44.076 Warning: Forest FFE-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301639778660) by 2546 ms
-2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from open to start closing because shutting down
-2016-10-06 08:46:54.690 Info: Forest FFE-0002 state changed from start closing to middle closing because who knows why
+2016-10-06 01:02:43.079 Warning: Forest MYF-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301630271550) by 1596 ms
+2016-10-06 01:02:44.076 Warning: Forest MYF-0001 fast query timestamp (14757301614311099) lags commit timestamp (14757301639778660) by 2546 ms
+2016-10-06 08:46:54.690 Info: Forest MYF-0002 state changed from open to start closing because shutting down
+2016-10-06 08:46:54.690 Info: Forest MYF-0002 state changed from start closing to middle closing because who knows why
 2017-06-13 15:07:24.962 Notice: Starting MarkLogic Server 8.0-6.3 x86_64 in /opt/MarkLogic with data in /data/MarkLogic
 2017-07-11 23:11:10.471 Info: Forest documents-012b state changed from unmounted to mounted
 2017-07-11 23:11:10.528 Info: Forest Schemas state changed from recovering to wait replication because not yet sure who is master
@@ -26,3 +26,5 @@ Thread 19 (Thread 0x7f45b3774700 (LWP 44176)):
 2017-04-10 04:45:54.892 Debug: Hung 10 sec
 2017-04-10 04:46:26.523 Debug: Hung 15 sec
 2017-04-10 05:04:09.292 Warning: Hung 22 sec
+2017-01-10 01:43:07.822 Warning: forest content-18.v01 journal frame took 80320 ms to journal: {{fsn=788055268, chksum=0x70c67890, words=33}, op=commit, time=1484030505, mfor=10322364720579345555, mtim=14796593774373030, mfsn=788055268, fmcl=9709540680995452769, fmf=10322364720579345555, fmt=14796593774373030, fmfsn=788055268, sk=17172749545546263458, pfo=196080908}
+2016-11-18 04:34:19.384 Warning: forest test-01 journal frame took 47894 ms to journal (sem=1 disk=2 ja=3 dbrep=4 ld=5): {{fsn=521112806, chksum=0x09682960, words=1418}, op=insert, time=1479461611, mfor=7781500708093738039, mtim=14739864111486880, mfsn=521112806, fmcl=16964678471847070106, fmf=7781500708093738039, fmt=14739864111486880, fmfsn=521112806, sk=14212689761650504188, pfo=193761268}
