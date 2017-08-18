@@ -44,8 +44,6 @@ resolve_options ($state);
 #       ->{scratch}{values}    []
 #       ->{stats}{$node}{$resource}{$action}{$value}     blank for value if none (e.g., restart)?
 
-print "ohai\n";
-
 
 read_configs ($state);
 
@@ -54,6 +52,7 @@ open my $fh_out, '>', 'logstats.csv';
 $state->{fh_out} = $fh_out;
 my $headers = $state->{headers};
 print $fh_out "$headers\n" if ($headers);
+$state->{total_time} = -time;
 
 foreach my $file (@{$state->{config}{input_files}}) {
     print "< $file\n";
@@ -70,10 +69,15 @@ foreach my $file (@{$state->{config}{input_files}}) {
         check_line ($state);
     }
     close $fh;
-    print "lines read for $file: $state->{input}{line_number}.\n";
+    my $line_number = $state->{input}{line_number};
+    $state->{total_lines} += $line_number;
+    print "lines read for $file: $line_number.\n";
 }
 
-print "obai\n";
+$state->{total_time} += time;
+my $lines_per_second = $state->{total_time} > 0 ? int ($state->{total_lines} / $state->{total_time}) : 'Inf';
+print "\n$state->{total_lines} in $state->{total_time} seconds ($lines_per_second l/s).\n";
+
 
 #dump_stats ($state);
 dump_counts ($fh_out, $state->{counts}, '');
