@@ -168,6 +168,7 @@ sub read_configs {
 
 sub dump_counts {
     my ($fh_out, $ref, $prefix) = @_;
+    unless (defined $ref)  { return }
     if (ref $ref eq 'HASH') {
         foreach my $key (sort keys %$ref) {
             dump_counts ($fh_out, $ref->{$key}, "$prefix$key,");
