@@ -115,10 +115,10 @@ sub check_line {
         if ($state->{scratch}{break}) { last }
     }
 
-    if (exists $state->{ship}) {
+    if ($state->{ship} && scalar @{$state->{ship}}) {
         my $output = $state->{fh_out};
         foreach $line (@{$state->{ship}}) {
-            print $output join (',', @$line), "\n";
+            print $output join ('\t', @$line), "\n";
         }
     }
 
