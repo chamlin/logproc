@@ -13,6 +13,7 @@ my $state = {
         config_files => [$FindBin::Bin.'/standard.config'],
         input_files => [],
         outdir => '.',
+        fileout => 'logstats.out',
         debug_string => '',
     },
 };
@@ -21,6 +22,7 @@ GetOptions (
     'file=s' => \$state->{config}{file},
     'glob=s' => \$state->{config}{glob},
     'outdir=s' => \$state->{config}{outdir},
+    'fileout=s' => \$state->{config}{fileout},
     'debug' => \$state->{config}{debug},
     'namefrom=s' => \$state->{config}{namefrom},
     'nameto=s' => \$state->{config}{nameto},
@@ -48,10 +50,11 @@ resolve_options ($state);
 read_configs ($state);
 
 
-open my $fh_out, '>', 'logstats.csv';
+open my $fh_out, '>', $state->{config}{fileout};
 $state->{fh_out} = $fh_out;
-my $headers = $state->{headers};
-print $fh_out "$headers\n" if ($headers);
+if (exists ($state->{headers})) {
+    print $fh_out join ($state->{joiner}, @{$state->{headers}}), "\n"
+}
 $state->{total_time} = -time;
 
 foreach my $file (@{$state->{config}{input_files}}) {
@@ -80,7 +83,7 @@ print "\n$state->{total_lines} in $state->{total_time} seconds ($lines_per_secon
 
 
 #dump_stats ($state);
-dump_counts ($fh_out, $state->{counts}, '');
+dump_counts ($fh_out, $state->{counts}, '', $state->{joiner});
 
 close $fh_out;
 
@@ -118,7 +121,7 @@ sub check_line {
     if ($state->{ship} && scalar @{$state->{ship}}) {
         my $output = $state->{fh_out};
         foreach $line (@{$state->{ship}}) {
-            print $output join ('\t', @$line), "\n";
+            print $output join ("\t", @$line), "\n";
         }
     }
 
@@ -167,11 +170,11 @@ sub read_configs {
 }
 
 sub dump_counts {
-    my ($fh_out, $ref, $prefix) = @_;
+    my ($fh_out, $ref, $prefix, $joiner) = @_;
     unless (defined $ref)  { return }
     if (ref $ref eq 'HASH') {
         foreach my $key (sort keys %$ref) {
-            dump_counts ($fh_out, $ref->{$key}, "$prefix$key,");
+            dump_counts ($fh_out, $ref->{$key}, "$prefix$key$joiner", $joiner);
         }
     } else {
         print $fh_out "$prefix$ref\n";
