@@ -66,6 +66,7 @@ foreach my $file (@{$state->{config}{input_files}}) {
     };
     open my $fh, '<', $file;
     while (my $line = <$fh>) {
+        chomp $line;
         $state->{input}{line} = $line;
         $state->{input}{line_number}++;
         $state->{scratch} = {};
