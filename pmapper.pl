@@ -74,23 +74,26 @@ sub iso_from_pstack {
 # dt, node, reading, resource, action, value
 sub dump_stats {
     my ($stats) = @_;
-    my $MB = 1024;
+    print "timestamp\tnode\treading\tresource\taction\tvalue\n";
     foreach my $date_time (sort keys %{$stats->{dt}}) {
         my $total = 0;
         foreach my $whatis (sort {$stats->{dt}{$date_time}{$b} <=> $stats->{dt}{$date_time}{$a}} keys %{$stats->{dt}{$date_time}}) {
             my $value = $stats->{dt}{$date_time}{$whatis};
             $total += $value;
-            if ($value < $MB) {
-                next;  # less than a meg?
-            } else {
-                $value = floor ($value / $MB + 0.5);
-            }
+            $value = round_mb ($value);
             if ($value > $stats->{config}{min_mb}) {
                 print "$date_time\t$stats->{config}{node}\tpmap_mb\tmemory\t$whatis\t$value\n";
             }
         }
+        $total = round_mb ($total);
         print "$date_time\t$stats->{config}{node}\tpmap_mb\tmemory\ttotal\t$total\n";
     }
+}
+
+sub round_mb {
+    my ($value) = @_;
+    my $MB = 1024;
+    return floor ($value / $MB + 0.5);
 }
 
 sub add_line {
