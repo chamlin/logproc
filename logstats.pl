@@ -13,7 +13,7 @@ my $state = {
         config_files => [$FindBin::Bin.'/standard.config'],
         input_files => [],
         outdir => '.',
-        fileout => 'logstats.out',
+        fileout => 'logstats.tsv',
         debug_string => '',
     },
 };
