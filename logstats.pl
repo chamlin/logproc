@@ -81,6 +81,9 @@ foreach my $file (@{$state->{config}{input_files}}) {
 $state->{total_time} += time;
 my $lines_per_second = $state->{total_time} > 0 ? int ($state->{total_lines} / $state->{total_time}) : 'Inf';
 print "\n$state->{total_lines} in $state->{total_time} seconds ($lines_per_second l/s).\n";
+if (exists $state->{events_written}) {
+    print "$state->{events_written} events written.\n";
+}
 
 
 #dump_stats ($state);
@@ -123,6 +126,7 @@ sub check_line {
         my $output = $state->{fh_out};
         foreach $line (@{$state->{ship}}) {
             print $output join ("\t", @$line), "\n";
+            $state->{events_written}++;
         }
     }
 
@@ -179,6 +183,7 @@ sub dump_counts {
         }
     } else {
         print $fh_out "$prefix$ref\n";
+        $state->{events_written}++;
     }
 }
 
