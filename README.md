@@ -14,6 +14,10 @@ For example, 500 MB merged for a forest:
 
 2017-01-25 09:24:39 test1 Forest-content-2-r1 merged_mb 500
 
+To generate logstats.tsv test results file:
+
+./logstats.pl --file test1,test2 
+
 Extras, aggregated per minute(?) : to note
 
 ## pmapper.pl
