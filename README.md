@@ -1,5 +1,25 @@
-# logproc
+# tsvst
 
-log processing, aimed at stats, but configurable
+General common format:
 
-Just imagine one of those 1990's Under Construction signs here. Now turn around and head back the other way.
+datetime\tnode\treading\tresource\taction\tvalue
+
+Generally no aggregation unless noted.
+
+## logstats.pl
+
+log stat extracter, simple state machine.
+
+For example, 500 MB merged for a forest:
+
+2017-01-25 09:24:39 test1 Forest-content-2-r1 merged_mb 500
+
+Extras, aggregated per minute(?) : to note
+
+## pmapper.pl
+
+extract some stats from pmap output
+
+For example, node n1's total memory at a datetime:
+
+2017-09-01 15:03:10     n1      pmap_mb memory  total   1391391273228
