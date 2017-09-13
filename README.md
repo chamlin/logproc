@@ -24,6 +24,15 @@ Extras, aggregated per minute(?) : to note
 
 extract some stats from pmap output
 
+reports rounded to MB
+
+--min gives minimum reported (default = 0)
+--node gives value to output in node column
+
+redirect output via shell
+
+outputs complete total, regardless of min setting
+
 For example, node n1's total memory at a datetime:
 
 2017-09-01 15:03:10     n1      pmap_mb memory  total   1391391273228
